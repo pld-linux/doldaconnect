@@ -1,6 +1,5 @@
 # TODO:
 # - make separate gaim subpackage
-# - what to with headers, *.la and static libs?
 # - separate subpackage with backend? pam-file and init-script from gentoo is in contrib
 # - build with guile extension and add dchub:// guile module
 # - add desktop
@@ -8,7 +7,7 @@
 Summary:	Direct Connect client
 Name:		doldaconnect
 Version:	0.1
-Release:	0.2
+Release:	0.3
 License:	GPL v2
 Group:		X11/Applications/Networking
 Source0:	http://www.dolda2000.com/~fredrik/doldaconnect/%{name}-%{version}.tar.gz
@@ -20,6 +19,7 @@ BuildRequires:	bzip2-devel
 BuildRequires:	gaim-devel
 BuildRequires:	gnome-panel-devel
 BuildRequires:	libtool
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appconfdir	/etc/%{name}
@@ -33,6 +33,29 @@ It consists of two parts - the client daemon and the user interface. The daemon 
  * A user can control his daemon from another location, such as from work, school, a friend, etc.
 
 This architecture also has many other advantages in store for the more advanced users; since the user interface communicates with the daemon using a well-defined protocol, other user interfaces can be written, such as an automatic downloader, a chatbot, etc. It is also designed for secure multiuser operation.
+
+%package libs
+Summary:	Libraries for %{name}
+Group:		Libraries
+
+%description libs
+Libraries for %{name}.
+
+%package devel
+Summary:	%{name} library header files
+Group:		Development/Libraries
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+
+%description devel
+%{name} library header files.
+
+%package static
+Summary:        Static %{name} library
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+
+%description static
+Static %{name} library.
 
 %prep
 %setup -q
@@ -60,6 +83,9 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog INSTALL README 
@@ -68,7 +94,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/bonobo/servers/*.server
 %attr(755,root,root) %{_libdir}/dolcon-trans-applet
-%attr(755,root,root) %{_libdir}/*.so.*.*.*
 %attr(755,root,root) %{_libdir}/speedrec
 #%{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/*.jpg
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/*.so.*.*.*
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/lib*.la
+%dir %{_includedir}/%{name}
+%{_includedir}/%{name}/*.h
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a
+%{_libdir}/gaim/*.a
