@@ -1,19 +1,28 @@
+# TODO:
+# - make separate gaim subpackage
+# - what to with headers, *.la and static libs?
+# - separate subpackage with backend? pam-file and init-script from gentoo is in contrib
+# - build with guile extension and add dchub:// guile module
+# - add desktop
+# - some findlang needed
 Summary:	Direct Connect client
 Name:		doldaconnect
 Version:	0.1
-Release:	0.1
+Release:	0.2
 License:	GPL v2
 Group:		X11/Applications/Networking
 Source0:	http://www.dolda2000.com/~fredrik/doldaconnect/%{name}-%{version}.tar.gz
 # Source0-md5:	8920593ede9d7866937cd2feb95923a8
 #Source1:	%{name}.desktop
-#Source2:	%{name}.png
 URL:		http://www.dolda2000.com/~fredrik/doldaconnect/
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
+BuildRequires:	gaim-devel
 BuildRequires:	gnome-panel-devel
 BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_appconfdir	/etc/%{name}
 
 %description
 Dolda Connect is a client program for the Direct Connect peer-to-peer filesharing network, written for GNU/Linux systems. It is possible that it may run on other Unix systems as well, as long as it is compiled with GCC, but this is untested so far. It is licensed under the GPL, version 2 or later.
@@ -30,6 +39,7 @@ This architecture also has many other advantages in store for the more advanced 
 
 %build
 %configure \
+	--sysconfdir=%{_appconfdir} \
 	--disable-rpath \
 	--enable-gtk2ui \
 	--enable-gtk2pbar \
@@ -40,22 +50,25 @@ This architecture also has many other advantages in store for the more advanced 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-#install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
+#install -d $RPM_BUILD_ROOT%{_desktopdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 #install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
-#install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-#%doc AUTHORS
-#%attr(755,root,root) %{_bindir}/*
-#%dir %{_datadir}/%{name}
-#%{_datadir}/%{name}/icons
+%doc AUTHORS ChangeLog INSTALL README 
+%dir %{_appconfdir}
+%config(noreplace) %{_appconfdir}/*
+%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_libdir}/bonobo/servers/*.server
+%attr(755,root,root) %{_libdir}/dolcon-trans-applet
+%attr(755,root,root) %{_libdir}/*.so.*.*.*
+%attr(755,root,root) %{_libdir}/speedrec
 #%{_desktopdir}/%{name}.desktop
-#%{_pixmapsdir}/%{name}.png
+%{_pixmapsdir}/*.jpg
