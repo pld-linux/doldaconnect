@@ -19,20 +19,41 @@ BuildRequires:	gaim-devel
 BuildRequires:	gnome-panel-devel
 BuildRequires:	guile-devel
 BuildRequires:	libtool
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+BuildRequires:	rpmbuild(macros) >= 1.268
+Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appconfdir	/etc/%{name}
 
 %description
-Dolda Connect is a client program for the Direct Connect peer-to-peer filesharing network, written for GNU/Linux systems. It is possible that it may run on other Unix systems as well, as long as it is compiled with GCC, but this is untested so far. It is licensed under the GPL, version 2 or later.
+Dolda Connect is a client program for the Direct Connect peer-to-peer
+filesharing network, written for GNU/Linux systems. It is possible
+that it may run on other Unix systems as well, as long as it is
+compiled with GCC, but this is untested so far.
 
-It consists of two parts - the client daemon and the user interface. The daemon is what does all the job of sharing files, searching, connecting to hubs, etc., while the user interface is a simple program that connects to the daemon in order to control it and give the user the current status of the daemon (such as the file transfers currently in progress, etc.). These two program run independently of each other, and the user interface can therefore be made to connect to a daemon running on another computer, over the internet or otherwise. For the average user, this yields two primary advantages:
+It consists of two parts - the client daemon and the user interface.
+The daemon is what does all the job of sharing files, searching,
+connecting to hubs, etc., while the user interface is a simple program
+that connects to the daemon in order to control it and give the user
+the current status of the daemon (such as the file transfers currently
+in progress, etc.). These two program run independently of each other,
+and the user interface can therefore be made to connect to a daemon
+running on another computer, over the internet or otherwise. For the
+average user, this yields two primary advantages:
 
- * The daemon can be made to run on another computer, which can be on all the time (a server, if you will), while the user interface can run on the user's workstation. That way, the user can turn off his workstation at night, while the server will continue all transfers in progress during that time.
- * A user can control his daemon from another location, such as from work, school, a friend, etc.
+- The daemon can be made to run on another computer, which can be on
+  all the time (a server, if you will), while the user interface can run
+  on the user's workstation. That way, the user can turn off his
+  workstation at night, while the server will continue all transfers in
+  progress during that time.
+- A user can control his daemon from another location, such as from
+  work, school, a friend, etc.
 
-This architecture also has many other advantages in store for the more advanced users; since the user interface communicates with the daemon using a well-defined protocol, other user interfaces can be written, such as an automatic downloader, a chatbot, etc. It is also designed for secure multiuser operation.
+This architecture also has many other advantages in store for the more
+advanced users; since the user interface communicates with the daemon
+using a well-defined protocol, other user interfaces can be written,
+such as an automatic downloader, a chatbot, etc. It is also designed
+for secure multiuser operation.
 
 %package libs
 Summary:	Libraries for %{name}
@@ -45,6 +66,7 @@ Libraries for %{name}.
 Summary:	Daemon for %{name}
 Group:		Daemons
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 
 %description -n doldacond
 Daemon for %{name} that handles all of the network connections.
@@ -52,7 +74,7 @@ Daemon for %{name} that handles all of the network connections.
 %package -n gaim-plugin-%{name}
 Summary:	Gaim plugin for %{name}
 Group:		Applications/Communications
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description -n gaim-plugin-%{name}
 Gaim plugin for %{name}.
@@ -60,15 +82,15 @@ Gaim plugin for %{name}.
 %package devel
 Summary:	%{name} library header files
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 %{name} library header files.
 
 %package static
-Summary:        Static %{name} library
+Summary:	Static %{name} library
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static %{name} library.
@@ -117,7 +139,6 @@ if [ "$1" = 0 ]; then
 	/sbin/chkconfig --del doldacond
 fi
 
-
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/dolcon
@@ -133,7 +154,7 @@ fi
 
 %files -n doldacond
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog INSTALL README 
+%doc AUTHORS ChangeLog INSTALL README
 %dir %{_appconfdir}
 %config(noreplace) %verify(not md5 mtime size) %{_appconfdir}/*
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/doldacond
