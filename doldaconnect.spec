@@ -1,18 +1,16 @@
 # TODO:
 # - use the same macros as in other gaim plugins packages
-# - separate subpackage with backend? pam-file and init-script from gentoo is in contrib
+# - pam-file and init-script from gentoo is in contrib - for backend
 # - build with guile extension and add dchub:// guile module
-# - add desktop
-# - some findlang needed
 Summary:	Direct Connect client
 Name:		doldaconnect
 Version:	0.1
-Release:	0.4
+Release:	0.5
 License:	GPL v2
 Group:		X11/Applications/Networking
 Source0:	http://www.dolda2000.com/~fredrik/doldaconnect/%{name}-%{version}.tar.gz
 # Source0-md5:	8920593ede9d7866937cd2feb95923a8
-#Source1:	%{name}.desktop
+Source1:	%{name}.desktop
 URL:		http://www.dolda2000.com/~fredrik/doldaconnect/
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
@@ -40,6 +38,13 @@ Group:		Libraries
 
 %description libs
 Libraries for %{name}.
+
+%package -n doldacond
+Summary:	Daemon for %{name}
+Group:		Daemons
+
+%description -n doldacond
+Daemon for %{name} that handles all of the network connections.
 
 %package -n gaim-plugin-%{name}
 Summary:	Gaim plugin for %{name}
@@ -81,12 +86,12 @@ Static %{name} library.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-#install -d $RPM_BUILD_ROOT%{_desktopdir}
+install -d $RPM_BUILD_ROOT%{_desktopdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-#install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 
 %find_lang %{name}
 
@@ -98,19 +103,25 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog INSTALL README 
-%dir %{_appconfdir}
-%config(noreplace) %{_appconfdir}/*
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/dolcon
 %attr(755,root,root) %{_libdir}/bonobo/servers/*.server
 %attr(755,root,root) %{_libdir}/dolcon-trans-applet
 %attr(755,root,root) %{_libdir}/speedrec
-#%{_desktopdir}/%{name}.desktop
+%{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/*.jpg
 
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/*.so.*.*.*
+
+%files -n doldacond
+%defattr(644,root,root,755)
+%doc AUTHORS ChangeLog INSTALL README 
+%dir %{_appconfdir}
+%config(noreplace) %{_appconfdir}/*
+%attr(755,root,root) %{_bindir}/doldacond
+%attr(755,root,root) %{_bindir}/locktouch
+%attr(755,root,root) %{_bindir}/tthsum
 
 %files -n gaim-plugin-%{name}
 %defattr(644,root,root,755)
