@@ -1,21 +1,23 @@
 # TODO:
 # - use the same macros as in other gaim plugins packages
-# - pam-file and init-script from gentoo is in contrib - for backend
-# - build with guile extension and add dchub:// guile module
+# - package guile app to some subpackage
 Summary:	Direct Connect client
 Name:		doldaconnect
 Version:	0.1
-Release:	0.5
+Release:	0.6
 License:	GPL v2
 Group:		X11/Applications/Networking
 Source0:	http://www.dolda2000.com/~fredrik/doldaconnect/%{name}-%{version}.tar.gz
 # Source0-md5:	8920593ede9d7866937cd2feb95923a8
 Source1:	%{name}.desktop
+Source2:	%{name}.init
+Source3:	%{name}.pam
 URL:		http://www.dolda2000.com/~fredrik/doldaconnect/
 BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	gaim-devel
 BuildRequires:	gnome-panel-devel
+BuildRequires:	guile-devel
 BuildRequires:	libtool
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -42,6 +44,7 @@ Libraries for %{name}.
 %package -n doldacond
 Summary:	Daemon for %{name}
 Group:		Daemons
+Requires(post,preun):	/sbin/chkconfig
 
 %description -n doldacond
 Daemon for %{name} that handles all of the network connections.
@@ -77,6 +80,7 @@ Static %{name} library.
 %configure \
 	--sysconfdir=%{_appconfdir} \
 	--disable-rpath \
+	--with-guile \
 	--enable-gtk2ui \
 	--enable-gtk2pbar \
 	--enable-gnomeapplet \
@@ -86,12 +90,14 @@ Static %{name} library.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_desktopdir}
+install -d $RPM_BUILD_ROOT{%{_desktopdir},/etc/{rc.d/init.d,pam.d,sysconfig}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/doldacond
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/doldacond
 
 %find_lang %{name}
 
@@ -100,6 +106,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
+
+%post -n doldacond
+/sbin/chkconfig --add doldacond
+%service doldacond restart
+
+%preun -n doldacond
+if [ "$1" = 0 ]; then
+	%service doldacond stop
+	/sbin/chkconfig --del doldacond
+fi
+
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -118,7 +135,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog INSTALL README 
 %dir %{_appconfdir}
-%config(noreplace) %{_appconfdir}/*
+%config(noreplace) %verify(not md5 mtime size) %{_appconfdir}/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/doldacond
+%attr(754,root,root) /etc/rc.d/init.d/doldacond
 %attr(755,root,root) %{_bindir}/doldacond
 %attr(755,root,root) %{_bindir}/locktouch
 %attr(755,root,root) %{_bindir}/tthsum
