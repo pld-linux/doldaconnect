@@ -7,7 +7,7 @@
 Summary:	Direct Connect client
 Name:		doldaconnect
 Version:	0.1
-Release:	0.
+Release:	0.4
 License:	GPL v2
 Group:		X11/Applications/Networking
 Source0:	http://www.dolda2000.com/~fredrik/doldaconnect/%{name}-%{version}.tar.gz
