@@ -1,5 +1,5 @@
 # TODO:
-# - make separate gaim subpackage
+# - use the same macros as in other gaim plugins packages
 # - separate subpackage with backend? pam-file and init-script from gentoo is in contrib
 # - build with guile extension and add dchub:// guile module
 # - add desktop
@@ -7,7 +7,7 @@
 Summary:	Direct Connect client
 Name:		doldaconnect
 Version:	0.1
-Release:	0.3
+Release:	0.
 License:	GPL v2
 Group:		X11/Applications/Networking
 Source0:	http://www.dolda2000.com/~fredrik/doldaconnect/%{name}-%{version}.tar.gz
@@ -40,6 +40,14 @@ Group:		Libraries
 
 %description libs
 Libraries for %{name}.
+
+%package -n gaim-plugin-%{name}
+Summary:	Gaim plugin for %{name}
+Group:		Applications/Communications
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+
+%description -n gaim-plugin-%{name}
+Gaim plugin for %{name}.
 
 %package devel
 Summary:	%{name} library header files
@@ -80,13 +88,15 @@ rm -rf $RPM_BUILD_ROOT
 
 #install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog INSTALL README 
 %dir %{_appconfdir}
@@ -101,6 +111,10 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/*.so.*.*.*
+
+%files -n gaim-plugin-%{name}
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gaim/libdolcon-gaim.so
 
 %files devel
 %defattr(644,root,root,755)
