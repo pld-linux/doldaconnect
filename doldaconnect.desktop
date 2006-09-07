@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=DoldaConnect
+Name[pl]=DoldaConnect
+Comment=Direct Connect client
+Comment[pl]=Klient Direct Connect
+Icon=hellodolda.jpg
+Exec=dolcon
+Terminal=false
+Type=Application
+Categories=GTK;Network;P2P;
+# vi: encoding=utf-8
