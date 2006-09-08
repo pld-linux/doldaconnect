@@ -1,10 +1,11 @@
 # TODO:
 # - use the same macros as in other gaim plugins packages
 # - package guile app to some subpackage
+# - package gnome applet to separate package
 Summary:	Direct Connect client
 Name:		doldaconnect
 Version:	0.1
-Release:	0.6
+Release:	0.7
 License:	GPL v2
 Group:		X11/Applications/Networking
 Source0:	http://www.dolda2000.com/~fredrik/doldaconnect/%{name}-%{version}.tar.gz
@@ -18,7 +19,9 @@ BuildRequires:	bzip2-devel
 BuildRequires:	gaim-devel
 BuildRequires:	gnome-panel-devel
 BuildRequires:	guile-devel
+BuildRequires:	libltdl-devel
 BuildRequires:	libtool
+BuildRequires:	pam-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
