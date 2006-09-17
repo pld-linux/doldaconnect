@@ -55,7 +55,7 @@ case "$1" in
 			killproc --pidfile /var/run/doldacond.pid doldacond -HUP
 			RETVAL=$?
 		else
-			msg_not_running doldacond >&2
+			msg_not_running doldacond
 			exit 7
 		fi
 		;;
