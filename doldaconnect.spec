@@ -3,6 +3,7 @@
 # - package guile app to some subpackage
 # - package gnome applet to separate package
 Summary:	Direct Connect client
+Summary(pl):	Klient Direct Connect
 Name:		doldaconnect
 Version:	0.1
 Release:	0.7
@@ -14,14 +15,15 @@ Source1:	%{name}.desktop
 Source2:	%{name}.init
 Source3:	%{name}.pam
 URL:		http://www.dolda2000.com/~fredrik/doldaconnect/
-BuildRequires:	automake
 BuildRequires:	bzip2-devel
 BuildRequires:	gaim-devel
-BuildRequires:	gnome-panel-devel
+BuildRequires:	gnome-panel-devel >= 2.0
+BuildRequires:	gtk+2-devel >= 2.0
 BuildRequires:	guile-devel
 BuildRequires:	libltdl-devel
 BuildRequires:	libtool
 BuildRequires:	pam-devel
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -58,45 +60,96 @@ using a well-defined protocol, other user interfaces can be written,
 such as an automatic downloader, a chatbot, etc. It is also designed
 for secure multiuser operation.
 
+%description -l pl
+Dolda Connect to program kliencki dla sieci wspó³dzielenia plików
+peer-to-peer Direct Connect. Zosta³ napisany dla systemów GNU/Linux.
+Byæ mo¿e dzia³a tak¿e na innych systemach uniksowych, je¶li zostanie
+skompilowany GCC, ale nie by³o to testowane.
+
+Program sk³ada siê z dwóch czê¶ci: demona klienckiego oraz interfejsu
+u¿ytkownika. Demon wykonuje w³a¶ciw± pracê wspó³dzielenia plików,
+wyszukiwania, ³±czenia z hubami itp., natomiast interfejs u¿ytkownika
+to prosty program ³±cz±cy siê z demonem w celu sterowania nim i
+podawania u¿ytkownikowi aktualnego stanu demona (tzn. aktualnie
+przesy³anych plików itp.). Te dwa programy dzia³aj± niezale¿nie od
+siebie, dziêki czemu interfejs u¿ytkownika mo¿e ³±czyæ siê z demonem
+dzia³aj±cym na innym komputerze poprzez Internet lub w inny sposób.
+Dla przeciêtnego u¿ytkownika ma to dwie g³ówne zalety:
+
+- Demon mo¿e dzia³aæ na innym komputerze, który jest w³±czony przez
+  ca³y czas (np. na serwerze), podczas gdy interfejs u¿ytkownika mo¿e
+  dzia³aæ na stacji roboczej u¿ytkownika; w ten sposób u¿ytkownik mo¿e
+  wy³±czyæ swoj± stacjê na noc, podczas gdy serwer nadal bêdzie
+  przesy³a³ pliki.
+- U¿ytkownik mo¿e kontrolowaæ swojego demona z innego miejsca, np. z
+  pracy, ze szko³y, od kolegi itp.
+
+Architektura ta ma tak¿e wiele innych zalet dla bardziej
+zaawansowanych u¿ytkowników; poniewa¿ interfejs u¿ytkownika komunikuje
+siê z demonem za pomoc± dobrze zdefiniowanego protoko³u, mo¿na napisaæ
+inne interfejsy u¿ytkownika, takie jak automatyczny ¶ci±gaæ, chatbot
+itp. Jest zaprojektowana tak¿e z my¶l± o bezpiecznej pracy
+wielou¿ytkownikowej.
+
 %package libs
-Summary:	Libraries for %{name}
+Summary:	%{name} libraries
+Summary(pl):	Biblioteki doldaconnecta
 Group:		Libraries
 
 %description libs
-Libraries for %{name}.
+%{name} libraries.
+
+%description libs -l pl
+Biblioteki doldaconnecta.
+
+%package devel
+Summary:	Header files for %{name} library
+Summary(pl):	Pliki nag³ówkowe biblioteki doldaconnecta
+Group:		Development/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
+
+%description devel
+Header files for %{name} library.
+
+%description devel -l pl
+Pliki nag³ówkowe biblioteki doldaconnecta.
+
+%package static
+Summary:	Static %{name} libraries
+Summary(pl):	Statyczne biblioteki doldaconnecta
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static %{name} libraries.
+
+%description static -l pl
+Statyczne biblioteki doldaconnecta.
 
 %package -n doldacond
 Summary:	Daemon for %{name}
+Summary(pl):	Demon doldaconnecta
 Group:		Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
 
 %description -n doldacond
-Daemon for %{name} that handles all of the network connections.
+Daemon for doldaconnect that handles all of the network connections.
+
+%description -n doldacond -l pl
+Demon doldaconnecta obs³uguj±cy wszystkie po³±czenia sieciowe.
 
 %package -n gaim-plugin-%{name}
 Summary:	Gaim plugin for %{name}
+Summary(pl):	Wtyczka Gaima dla doldaconnecta
 Group:		Applications/Communications
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description -n gaim-plugin-%{name}
 Gaim plugin for %{name}.
 
-%package devel
-Summary:	%{name} library header files
-Group:		Development/Libraries
-Requires:	%{name}-libs = %{version}-%{release}
-
-%description devel
-%{name} library header files.
-
-%package static
-Summary:	Static %{name} library
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-Static %{name} library.
+%description -n gaim-plugin-%{name} -l pl
+Wtyczka Gaima dla doldaconnecta.
 
 %prep
 %setup -q
@@ -123,6 +176,8 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},/etc/{rc.d/init.d,pam.d,sysconfig}}
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/doldacond
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/doldacond
+
+rm -f $RPM_BUILD_ROOT%{_libdir}/gaim/*.a
 
 %find_lang %{name}
 
@@ -153,7 +208,18 @@ fi
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so.*.*.*
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/lib*.la
+%dir %{_includedir}/%{name}
+%{_includedir}/%{name}/*.h
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a
 
 %files -n doldacond
 %defattr(644,root,root,755)
@@ -169,15 +235,3 @@ fi
 %files -n gaim-plugin-%{name}
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gaim/libdolcon-gaim.so
-
-%files devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
-%dir %{_includedir}/%{name}
-%{_includedir}/%{name}/*.h
-
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/lib*.a
-%{_libdir}/gaim/*.a
