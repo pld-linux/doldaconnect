@@ -3,7 +3,7 @@
 # - package guile app to some subpackage
 # - package gnome applet to separate package
 Summary:	Direct Connect client
-Summary(pl):	Klient Direct Connect
+Summary(pl.UTF-8):   Klient Direct Connect
 Name:		doldaconnect
 Version:	0.1
 Release:	0.7
@@ -60,75 +60,75 @@ using a well-defined protocol, other user interfaces can be written,
 such as an automatic downloader, a chatbot, etc. It is also designed
 for secure multiuser operation.
 
-%description -l pl
-Dolda Connect to program kliencki dla sieci wspó³dzielenia plików
-peer-to-peer Direct Connect. Zosta³ napisany dla systemów GNU/Linux.
-Byæ mo¿e dzia³a tak¿e na innych systemach uniksowych, je¶li zostanie
-skompilowany GCC, ale nie by³o to testowane.
+%description -l pl.UTF-8
+Dolda Connect to program kliencki dla sieci wspÃ³Å‚dzielenia plikÃ³w
+peer-to-peer Direct Connect. ZostaÅ‚ napisany dla systemÃ³w GNU/Linux.
+ByÄ‡ moÅ¼e dziaÅ‚a takÅ¼e na innych systemach uniksowych, jeÅ›li zostanie
+skompilowany GCC, ale nie byÅ‚o to testowane.
 
-Program sk³ada siê z dwóch czê¶ci: demona klienckiego oraz interfejsu
-u¿ytkownika. Demon wykonuje w³a¶ciw± pracê wspó³dzielenia plików,
-wyszukiwania, ³±czenia z hubami itp., natomiast interfejs u¿ytkownika
-to prosty program ³±cz±cy siê z demonem w celu sterowania nim i
-podawania u¿ytkownikowi aktualnego stanu demona (tzn. aktualnie
-przesy³anych plików itp.). Te dwa programy dzia³aj± niezale¿nie od
-siebie, dziêki czemu interfejs u¿ytkownika mo¿e ³±czyæ siê z demonem
-dzia³aj±cym na innym komputerze poprzez Internet lub w inny sposób.
-Dla przeciêtnego u¿ytkownika ma to dwie g³ówne zalety:
+Program skÅ‚ada siÄ™ z dwÃ³ch czÄ™Å›ci: demona klienckiego oraz interfejsu
+uÅ¼ytkownika. Demon wykonuje wÅ‚aÅ›ciwÄ… pracÄ™ wspÃ³Å‚dzielenia plikÃ³w,
+wyszukiwania, Å‚Ä…czenia z hubami itp., natomiast interfejs uÅ¼ytkownika
+to prosty program Å‚Ä…czÄ…cy siÄ™ z demonem w celu sterowania nim i
+podawania uÅ¼ytkownikowi aktualnego stanu demona (tzn. aktualnie
+przesyÅ‚anych plikÃ³w itp.). Te dwa programy dziaÅ‚ajÄ… niezaleÅ¼nie od
+siebie, dziÄ™ki czemu interfejs uÅ¼ytkownika moÅ¼e Å‚Ä…czyÄ‡ siÄ™ z demonem
+dziaÅ‚ajÄ…cym na innym komputerze poprzez Internet lub w inny sposÃ³b.
+Dla przeciÄ™tnego uÅ¼ytkownika ma to dwie gÅ‚Ã³wne zalety:
 
-- Demon mo¿e dzia³aæ na innym komputerze, który jest w³±czony przez
-  ca³y czas (np. na serwerze), podczas gdy interfejs u¿ytkownika mo¿e
-  dzia³aæ na stacji roboczej u¿ytkownika; w ten sposób u¿ytkownik mo¿e
-  wy³±czyæ swoj± stacjê na noc, podczas gdy serwer nadal bêdzie
-  przesy³a³ pliki.
-- U¿ytkownik mo¿e kontrolowaæ swojego demona z innego miejsca, np. z
-  pracy, ze szko³y, od kolegi itp.
+- Demon moÅ¼e dziaÅ‚aÄ‡ na innym komputerze, ktÃ³ry jest wÅ‚Ä…czony przez
+  caÅ‚y czas (np. na serwerze), podczas gdy interfejs uÅ¼ytkownika moÅ¼e
+  dziaÅ‚aÄ‡ na stacji roboczej uÅ¼ytkownika; w ten sposÃ³b uÅ¼ytkownik moÅ¼e
+  wyÅ‚Ä…czyÄ‡ swojÄ… stacjÄ™ na noc, podczas gdy serwer nadal bÄ™dzie
+  przesyÅ‚aÅ‚ pliki.
+- UÅ¼ytkownik moÅ¼e kontrolowaÄ‡ swojego demona z innego miejsca, np. z
+  pracy, ze szkoÅ‚y, od kolegi itp.
 
-Architektura ta ma tak¿e wiele innych zalet dla bardziej
-zaawansowanych u¿ytkowników; poniewa¿ interfejs u¿ytkownika komunikuje
-siê z demonem za pomoc± dobrze zdefiniowanego protoko³u, mo¿na napisaæ
-inne interfejsy u¿ytkownika, takie jak automatyczny ¶ci±gaæ, chatbot
-itp. Jest zaprojektowana tak¿e z my¶l± o bezpiecznej pracy
-wielou¿ytkownikowej.
+Architektura ta ma takÅ¼e wiele innych zalet dla bardziej
+zaawansowanych uÅ¼ytkownikÃ³w; poniewaÅ¼ interfejs uÅ¼ytkownika komunikuje
+siÄ™ z demonem za pomocÄ… dobrze zdefiniowanego protokoÅ‚u, moÅ¼na napisaÄ‡
+inne interfejsy uÅ¼ytkownika, takie jak automatyczny Å›ciÄ…gaÄ‡, chatbot
+itp. Jest zaprojektowana takÅ¼e z myÅ›lÄ… o bezpiecznej pracy
+wielouÅ¼ytkownikowej.
 
 %package libs
 Summary:	%{name} libraries
-Summary(pl):	Biblioteki doldaconnecta
+Summary(pl.UTF-8):   Biblioteki doldaconnecta
 Group:		Libraries
 
 %description libs
 %{name} libraries.
 
-%description libs -l pl
+%description libs -l pl.UTF-8
 Biblioteki doldaconnecta.
 
 %package devel
 Summary:	Header files for %{name} library
-Summary(pl):	Pliki nag³ówkowe biblioteki doldaconnecta
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki doldaconnecta
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 Header files for %{name} library.
 
-%description devel -l pl
-Pliki nag³ówkowe biblioteki doldaconnecta.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki doldaconnecta.
 
 %package static
 Summary:	Static %{name} libraries
-Summary(pl):	Statyczne biblioteki doldaconnecta
+Summary(pl.UTF-8):   Statyczne biblioteki doldaconnecta
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static %{name} libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczne biblioteki doldaconnecta.
 
 %package -n doldacond
 Summary:	Daemon for %{name}
-Summary(pl):	Demon doldaconnecta
+Summary(pl.UTF-8):   Demon doldaconnecta
 Group:		Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
@@ -136,19 +136,19 @@ Requires:	rc-scripts
 %description -n doldacond
 Daemon for doldaconnect that handles all of the network connections.
 
-%description -n doldacond -l pl
-Demon doldaconnecta obs³uguj±cy wszystkie po³±czenia sieciowe.
+%description -n doldacond -l pl.UTF-8
+Demon doldaconnecta obsÅ‚ugujÄ…cy wszystkie poÅ‚Ä…czenia sieciowe.
 
 %package -n gaim-plugin-%{name}
 Summary:	Gaim plugin for %{name}
-Summary(pl):	Wtyczka Gaima dla doldaconnecta
+Summary(pl.UTF-8):   Wtyczka Gaima dla doldaconnecta
 Group:		Applications/Communications
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description -n gaim-plugin-%{name}
 Gaim plugin for %{name}.
 
-%description -n gaim-plugin-%{name} -l pl
+%description -n gaim-plugin-%{name} -l pl.UTF-8
 Wtyczka Gaima dla doldaconnecta.
 
 %prep
