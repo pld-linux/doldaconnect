@@ -3,7 +3,7 @@
 # - package guile app to some subpackage
 # - package gnome applet to separate package
 Summary:	Direct Connect client
-Summary(pl.UTF-8):   Klient Direct Connect
+Summary(pl.UTF-8):	Klient Direct Connect
 Name:		doldaconnect
 Version:	0.1
 Release:	0.7
@@ -93,7 +93,7 @@ wieloużytkownikowej.
 
 %package libs
 Summary:	%{name} libraries
-Summary(pl.UTF-8):   Biblioteki doldaconnecta
+Summary(pl.UTF-8):	Biblioteki doldaconnecta
 Group:		Libraries
 
 %description libs
@@ -104,7 +104,7 @@ Biblioteki doldaconnecta.
 
 %package devel
 Summary:	Header files for %{name} library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki doldaconnecta
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki doldaconnecta
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
@@ -116,7 +116,7 @@ Pliki nagłówkowe biblioteki doldaconnecta.
 
 %package static
 Summary:	Static %{name} libraries
-Summary(pl.UTF-8):   Statyczne biblioteki doldaconnecta
+Summary(pl.UTF-8):	Statyczne biblioteki doldaconnecta
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -128,7 +128,7 @@ Statyczne biblioteki doldaconnecta.
 
 %package -n doldacond
 Summary:	Daemon for %{name}
-Summary(pl.UTF-8):   Demon doldaconnecta
+Summary(pl.UTF-8):	Demon doldaconnecta
 Group:		Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
@@ -141,7 +141,7 @@ Demon doldaconnecta obsługujący wszystkie połączenia sieciowe.
 
 %package -n gaim-plugin-%{name}
 Summary:	Gaim plugin for %{name}
-Summary(pl.UTF-8):   Wtyczka Gaima dla doldaconnecta
+Summary(pl.UTF-8):	Wtyczka Gaima dla doldaconnecta
 Group:		Applications/Communications
 Requires:	%{name}-libs = %{version}-%{release}
 
