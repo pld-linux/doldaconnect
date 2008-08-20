@@ -5,12 +5,12 @@
 Summary:	Direct Connect client
 Summary(pl.UTF-8):	Klient Direct Connect
 Name:		doldaconnect
-Version:	0.4
-Release:	0.2
+Version:	1.2
+Release:	0.1
 License:	GPL v2+
 Group:		X11/Applications/Networking
 Source0:	http://www.dolda2000.com/~fredrik/doldaconnect/%{name}-%{version}.tar.gz
-# Source0-md5:	bf97497d7345ad2d4bcc3a0c4b35bffc
+# Source0-md5:	7c6d12d094bc73211001c38cdd6cf286
 Source1:	%{name}.desktop
 Source2:	%{name}.init
 Source3:	%{name}.pam
